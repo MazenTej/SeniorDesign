@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
+import ChatInterface from "./components/ChatInterface";
+import { CssBaseline, Box } from "@mui/material";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <CssBaseline />
+      <Navbar />
+      <Box display="flex" height="calc(100vh - 64px)">
+        {" "}
+        {/* Adjust the height to consider the navbar */}
+        <Sidebar />
+        <ChatInterface />
+      </Box>
+    </>
   );
-}
+};
 
 export default App;
