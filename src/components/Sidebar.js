@@ -23,7 +23,7 @@ const Sidebar = () => {
         "& .MuiDrawer-paper": {
           width: 240,
           boxSizing: "border-box",
-          bgcolor: "rgb(173, 35, 67)", // Set the background color to burgundy
+          bgcolor: "rgb(173, 35, 67)", 
         },
       }}
     >
@@ -50,7 +50,6 @@ const Sidebar = () => {
         </ListItem>
       </List>
       <Divider />
-      {/* Add additional items here */}
     </Drawer>
   );
 };
