@@ -1,33 +1,21 @@
 import React, { useState } from "react";
-import { Box, TextField, IconButton } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
+// import { Box, TextField, IconButton } from "@mui/material";
+// import SendIcon from "@mui/icons-material/Send";
 
-const ChatInput = () => {
-  const [message, setMessage] = useState("");
+const ChatInput = ({onMessageSubmit}) => {
+  const [inputValue, setInputValue] = useState("");
 
-  const sendMessage = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Implement your send message logic
+    onMessageSubmit(inputValue);
+    setInputValue('');
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={sendMessage}
-      sx={{ display: "flex", alignItems: "center", width: "100%" }}
-    >
-      <TextField
-        fullWidth
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder="Send a message"
-        variant="outlined"
-        sx={{ width: "80%" }} // You can adjust this width as needed
-      />
-      <IconButton color="primary" type="submit">
-        <SendIcon />
-      </IconButton>
-    </Box>
+    <form onSubmit={handleSubmit}>
+    <input type="text" value={inputValue} onChange={e => setInputValue(e.target.value)} />
+    <button type="submit">Send</button>
+  </form> 
   );
 };
 
