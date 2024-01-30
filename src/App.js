@@ -8,12 +8,12 @@ const App = () => {
   return (
     <>
       <CssBaseline />
-      <Navbar />
-      <Box display="flex" height="calc(100vh - 64px)">
-        {" "}
-        {/* Adjust the height to consider the navbar */}
-        <Sidebar />
-        <ChatInterface />
+      <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+        <Navbar />
+        <Box sx={{ display: "flex", flexGrow: 1 }}>
+          <Sidebar />
+          <ChatInterface />
+        </Box>
       </Box>
     </>
   );

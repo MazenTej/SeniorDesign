@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  // Box,
   Drawer,
   List,
   ListItem,
@@ -18,12 +17,14 @@ const Sidebar = () => {
     <Drawer
       variant="permanent"
       sx={{
-        width: 240,
+        width: "20%",
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: 240,
+          width: "20%",
           boxSizing: "border-box",
           bgcolor: "rgb(173, 35, 67)",
+          height: "100%", // Fill the height of the flex container
+          marginTop: "64px",
         },
       }}
     >
