@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Box,
+  // Box,
   Drawer,
   List,
   ListItem,
@@ -23,7 +23,7 @@ const Sidebar = () => {
         "& .MuiDrawer-paper": {
           width: 240,
           boxSizing: "border-box",
-          bgcolor: "rgb(173, 35, 67)", 
+          bgcolor: "rgb(173, 35, 67)",
         },
       }}
     >
