@@ -10,10 +10,25 @@
 
   .card-layout {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
+    justify-content: space-evenly;
+    align-items: stretch; /* Ensures that all items stretch to fill the container */
+    width: 100%; /* Set the width to fill the container */
+    gap: 16px; /* Adds a gap between the cards */
   }
+
+  /* Grid item styling */
+.card-layout > .MuiGrid-root {
+  flex: 1; /* Each grid item takes up equal space */
+}
+
+/* Card content styling */
+.MuiCardContent-root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distributes space evenly inside the card */
+  height: 100%; /* Ensures that each card content takes the full height of the card */
+}
+
 
   .list-start {
     display: flex;
@@ -67,7 +82,9 @@
 
 }
 .chat-input-container {
-  margin-top: auto; /* Assuming you want it to span the full width */
+  width: 100%; /* Fill out the horizontal space */
+  padding: 10px; /* Add some padding around the chat input */
+  box-sizing: border-box; /* Ensure padding doesn't affect the overall width */
 }
   
 
