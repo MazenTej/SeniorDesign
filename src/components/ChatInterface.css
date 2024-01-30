@@ -5,6 +5,7 @@
     justify-content: space-between;
     max-height: calc(100vh - 200px);
     align-items: center;
+
   }
 
   .card-layout {
@@ -29,7 +30,7 @@
     padding: 16px;
     margin-bottom: 16px;
   }
-  
+/*   
   .message-item {
     padding: 8px;
     border-radius: 4px;
@@ -47,17 +48,27 @@
   .server-message {
     background-color: #f50057; 
     color: white;
-  }
-  
-  .align-right {
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  .align-left {
-    display: flex;
-    justify-content: flex-start;
-  }
+  } */
+  .message-item .user-message {
+    background-color: #0984ff !important;
+    color: white !important;
+    padding: 10px;
+    margin-right: auto;
+
+    border-radius: 10px;
+}
+
+.message-item .server-message {
+    background-color: #f50057 !important;
+    color: white !important;
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: auto;
+
+}
+.chat-input-container {
+  margin-top: auto; /* Assuming you want it to span the full width */
+}
   
 
   @keyframes fadeIn {

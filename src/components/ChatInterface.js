@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import axios from 'axios'
+import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import {
   Box,
   Typography,
@@ -10,94 +10,122 @@ import {
   Button,
   List,
   ListItem,
-  Paper
+  Paper,
+  CircularProgress,
 } from "@mui/material";
 import ChatInput from "./ChatInput";
-import './ChatInterface.css';
+import "./ChatInterface.css";
 
 const ChatInterface = () => {
-
   const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef(null);
 
   const handleMessageSubmit = async (message) => {
-    try {
-      const response = await axios.post('http://127.0.0.1:5000/query', { message });
+    // Add user message immediately
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { text: message, sender: "user" },
+    ]);
 
-      setMessages(prevMessages => [
-        ...prevMessages, 
-        { text: message, sender: "user" },
-        { text: response.data.response, sender: "server" }
+    setIsLoading(true); // Start loading
+
+    try {
+      const response = await axios.post("http://127.0.0.1:5000/query", {
+        message,
+      });
+
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: response.data.response, sender: "server" },
       ]);
     } catch (error) {
       console.error("Error sending message to server:", error);
     }
+
+    setIsLoading(false); // Stop loading
   };
-
-
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
   return (
-      <Box className="chat-container">
-        <Box>
-          <Typography variant="h4" align="center" gutterBottom>
-            Vanguard AI Helper
-          </Typography> 
-          <Box className="card-layout">
+    <Box className="chat-container">
+      <Box>
+        <Typography variant="h4" align="center" gutterBottom>
+          Vanguard AI Helper
+        </Typography>
+        <Box className="card-layout">
           <Grid>
-           <Card variant="outlined">
-             <CardContent>
-               <Typography gutterBottom variant="h5" component="h2">
-                 Examples
-               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                1) How to transfer money into Vanguard <br />
-                2) I am getting married, what are my next steps?
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small" color="primary">
-                Learn More
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
+            <Card variant="outlined">
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  Examples
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  1) How to transfer money into Vanguard <br />
+                  2) I am getting married, what are my next steps?
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" color="primary">
+                  Learn More
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
 
-        <Grid>
-           <Card variant="outlined">
-             <CardContent>
-               <Typography gutterBottom variant="h5" component="h2">
-                 Capabilities
-               </Typography>
-                   You can ask the chat systema any queries regarding Vanguard's system.
-               <Typography variant="body2" color="textSecondary" component="p">
-               </Typography>
-             </CardContent>
-             <CardActions>
-               <Button size="small" color="primary">
-                 Learn More
-               </Button>
-             </CardActions>
-           </Card>
-         </Grid>
-         </Box>
-
-        </Box>
-  
-        <Box className="message-list">
-          <List className="list-start">
-            {messages.map((message, index) => (
-              <ListItem key={index} className={`message-item ${message.sender === "user" ? 'align-right' : 'align-left'}`}>
-                <Paper className={message.sender === "user" ? 'user-message' : 'server-message'}>
-                  <Typography variant="body1">{message.text}</Typography>
-                </Paper>
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-  
-        <Box>
-          <ChatInput onMessageSubmit={handleMessageSubmit}/>
+          <Grid>
+            <Card variant="outlined">
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  Capabilities
+                </Typography>
+                You can ask the chat systema any queries regarding Vanguard's
+                system.
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                ></Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" color="primary">
+                  Learn More
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
         </Box>
       </Box>
 
+      <Box className="message-list">
+        <List>
+          {messages.map((message, index) => (
+            <ListItem key={index} className={`message-item`}>
+              <Paper
+                className={
+                  message.sender === "user" ? "user-message" : "server-message"
+                }
+              >
+                <Typography variant="body1">{message.text}</Typography>
+              </Paper>
+            </ListItem>
+          ))}
+        </List>
+        <div ref={messagesEndRef} /> {/* Add this line */}
+        {isLoading && (
+          <div style={{ marginLeft: "10px" }}>
+            {" "}
+            <CircularProgress />
+          </div>
+        )}{" "}
+        {/* Loading icon */}
+      </Box>
+
+      <Box className="chat-input-container">
+        <ChatInput onMessageSubmit={handleMessageSubmit} />
+      </Box>
+    </Box>
   );
 };
 export default ChatInterface;
