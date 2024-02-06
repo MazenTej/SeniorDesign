@@ -5,6 +5,7 @@
     justify-content: space-between;
     max-height: calc(100vh - 200px);
     align-items: center;
+    width: 100%;
 
   }
 
@@ -14,6 +15,8 @@
     align-items: stretch; /* Ensures that all items stretch to fill the container */
     width: 100%; /* Set the width to fill the container */
     gap: 16px; /* Adds a gap between the cards */
+    margin-top: 32px; /* Added margin to the top for space between title and boxes */
+
   }
 
   /* Grid item styling */
@@ -82,9 +85,13 @@
 
 }
 .chat-input-container {
-  width: 100%; /* Fill out the horizontal space */
-  padding: 10px; /* Add some padding around the chat input */
-  box-sizing: border-box; /* Ensure padding doesn't affect the overall width */
+  width: 70%;
+  padding: 10px;
+  box-sizing: border-box;
+  position: fixed; /* Fixes the input to the bottom */
+  bottom: 0; /* Positions at the bottom of the page */
+  background: white; /* Ensure the background matches the page */
+  z-index: 1000; /* Ensure padding doesn't affect the overall width */
 }
   
 

@@ -1,0 +1,25 @@
+.vanguard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Use full height to vertically center */
+    text-align: center; /* Center the text */
+  }
+  
+  .buttons-container {
+    margin-top: 20px;
+  }
+  
+  button {
+    margin: 0 10px; /* Adds space between the buttons */
+    padding: 10px 30px; /* Adjust padding as needed for wider buttons */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+    background-color: rgb(173, 35, 67); /* Set the background color */
+    color: white; /* Set the text color to white */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Optional: adds rounded corners */
+    font-size: 16px; /* Adjust the font size as needed */
+    /* Add more styling here to match your design */
+  }
+  
