@@ -50,7 +50,9 @@ const ChatInterface = () => {
   }, [messages]);
   return (
     <Box className="chat-container">
-      <Box>
+      <Box my={6} textAlign="center">
+        {" "}
+        {/* Increased the margin here */}
         <Typography variant="h4" align="center" gutterBottom>
           Vanguard AI Helper
         </Typography>

@@ -23,6 +23,7 @@ const Sidebar = () => {
           width: "20%",
           boxSizing: "border-box",
           bgcolor: "rgb(173, 35, 67)",
+          color: "white", // Set text color to white for all child components
           height: "100%", // Fill the height of the flex container
           marginTop: "64px",
         },
@@ -31,26 +32,42 @@ const Sidebar = () => {
       <List>
         <ListItem button>
           <ListItemIcon>
-            <ChatIcon />
+            <ChatIcon sx={{ color: "white" }} />
           </ListItemIcon>
-          <ListItemText primary="New chat" />
+          <ListItemText primary="New chat" sx={{ color: "white" }} />
         </ListItem>
         <ListItem>
           <TextField
             fullWidth
             placeholder="Search"
             variant="outlined"
-            InputProps={{ endAdornment: <SearchIcon /> }}
+            sx={{
+              input: { color: "white" }, // Set text color inside the input field to white
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "white", // Set border color
+                },
+                "&:hover fieldset": {
+                  borderColor: "white", // Set border color on hover
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "white", // Set border color on focus
+                },
+              },
+            }}
+            InputProps={{
+              endAdornment: <SearchIcon sx={{ color: "white" }} />,
+            }}
           />
         </ListItem>
         <ListItem button>
           <ListItemIcon>
-            <MemoryIcon />
+            <MemoryIcon sx={{ color: "white" }} />
           </ListItemIcon>
-          <ListItemText primary="My Memory" />
+          <ListItemText primary="My Memory" sx={{ color: "white" }} />
         </ListItem>
       </List>
-      <Divider />
+      <Divider sx={{ bgcolor: "white" }} />
     </Drawer>
   );
 };
