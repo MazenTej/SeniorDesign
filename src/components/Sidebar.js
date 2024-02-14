@@ -1,4 +1,6 @@
 import React from "react";
+import { useChat } from "./ChatContext";
+
 import {
   Drawer,
   List,
@@ -13,6 +15,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import MemoryIcon from "@mui/icons-material/Memory";
 
 const Sidebar = () => {
+  const { chats, addNewChat, setActiveChatId, activeChatId } = useChat();
+  const activeChatStyle = {
+    bgcolor: "rgba(255, 255, 255, 0.2)", // Light white background for the active chat
+    color: "white", // Keep text color white
+  };
+
   return (
     <Drawer
       variant="permanent"
@@ -30,7 +38,7 @@ const Sidebar = () => {
       }}
     >
       <List>
-        <ListItem button>
+        <ListItem button onClick={addNewChat}>
           <ListItemIcon>
             <ChatIcon sx={{ color: "white" }} />
           </ListItemIcon>
@@ -66,6 +74,19 @@ const Sidebar = () => {
           </ListItemIcon>
           <ListItemText primary="My Memory" sx={{ color: "white" }} />
         </ListItem>
+        {chats.map((chat, index) => (
+          <ListItem
+            button
+            key={chat.id}
+            onClick={() => setActiveChatId(chat.id)}
+            sx={chat.id === activeChatId ? activeChatStyle : {}}
+          >
+            <ListItemText
+              primary={`Chat ${index + 1}`}
+              sx={{ color: chat.id === activeChatId ? "inherit" : "white" }}
+            />
+          </ListItem>
+        ))}
       </List>
       <Divider sx={{ bgcolor: "white" }} />
     </Drawer>

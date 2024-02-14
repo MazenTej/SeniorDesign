@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { useChat } from "./ChatContext";
+
 import {
   Box,
   Typography,
@@ -17,16 +19,16 @@ import ChatInput from "./ChatInput";
 import "./ChatInterface.css";
 
 const ChatInterface = () => {
-  const [messages, setMessages] = useState([]);
+  const { chats, activeChatId, addMessageToChat } = useChat();
+  const activeChat = chats.find((chat) => chat.id === activeChatId) || {
+    messages: [],
+  };
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
   const handleMessageSubmit = async (message) => {
     // Add user message immediately
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { text: message, sender: "user" },
-    ]);
+    addMessageToChat(message, "user");
 
     setIsLoading(true); // Start loading
 
@@ -35,10 +37,7 @@ const ChatInterface = () => {
         message,
       });
 
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: response.data.response, sender: "server" },
-      ]);
+      addMessageToChat(response.data.response, "server");
     } catch (error) {
       console.error("Error sending message to server:", error);
     }
@@ -47,7 +46,11 @@ const ChatInterface = () => {
   };
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [activeChat.messages]);
+
+  useEffect(() => {
+    console.log(chats);
+  }, [chats]);
   return (
     <Box className="chat-container">
       <Box my={6} textAlign="center">
@@ -102,7 +105,7 @@ const ChatInterface = () => {
 
       <Box className="message-list">
         <List>
-          {messages.map((message, index) => (
+          {activeChat.messages.map((message, index) => (
             <ListItem key={index} className={`message-item`}>
               <Paper
                 className={
