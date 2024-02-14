@@ -8,16 +8,19 @@ import Landing from "./pages/Landing";
 import Faq from "./pages/Faq";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ChatProvider } from "./components/ChatContext";
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/chat" element={<Chat />} />
-        <Route path="/faq" element={<Faq />} />
-      </Routes>
-    </Router>
+    <ChatProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/faq" element={<Faq />} />
+        </Routes>
+      </Router>
+    </ChatProvider>
   );
 };
 
