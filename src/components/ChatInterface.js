@@ -50,7 +50,7 @@ const ChatInterface = () => {
       const data = await response.json(); // Assuming the response is JSON
 
       // Assuming the API returns a JSON object with a response key
-      addMessageToChat(data.response, "server");
+      addMessageToChat(data, "server");
     } catch (error) {
       console.error("Error fetching data:", error);
     }
