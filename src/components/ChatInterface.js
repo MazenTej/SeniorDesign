@@ -20,42 +20,26 @@ import "./ChatInterface.css";
 
 const ChatInterface = () => {
   const { chats, activeChatId, addMessageToChat } = useChat();
+  const { searchQuery } = useChat(); // Get searchQuery from context
+
   const activeChat = chats.find((chat) => chat.id === activeChatId) || {
     messages: [],
   };
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
+  const highlightSearchTerm = (text, searchTerm) => {
+    if (!searchTerm.trim()) return text; // Return original text if search term is empty
 
-  const handleMessageSubmit = async (message) => {
-    // Add user message immediately
-    addMessageToChat(message, "user");
-
-    setIsLoading(true); // Start loading
-
-    // Encode the message to ensure the URL is correctly formatted
-    const encodedMessage = encodeURIComponent(message);
-    const url = `https://qwq4uzmkaq6tmmj7afeozfguke0ulend.lambda-url.us-east-1.on.aws/?query=${encodedMessage}`;
-
-    try {
-      const response = await fetch(url, {
-        method: "GET", // Update to GET request
-        headers: {
-          Accept: "application/json", // Ensure we are accepting JSON
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json(); // Assuming the response is JSON
-
-      // Assuming the API returns a JSON object with a response key
-      addMessageToChat(data.response, "server");
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-
-    setIsLoading(false); // Stop loading
+    const parts = text.split(new RegExp(`(${searchTerm})`, "gi"));
+    return parts.map((part, index) =>
+      part.toLowerCase() === searchTerm.toLowerCase() ? (
+        <span key={index} className="highlight">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
   };
 
   // const handleMessageSubmit = async (message) => {
@@ -64,25 +48,54 @@ const ChatInterface = () => {
 
   //   setIsLoading(true); // Start loading
 
+  //   // Encode the message to ensure the URL is correctly formatted
+  //   const encodedMessage = encodeURIComponent(message);
+  //   const url = `https://qwq4uzmkaq6tmmj7afeozfguke0ulend.lambda-url.us-east-1.on.aws/?query=${encodedMessage}`;
+
   //   try {
-  //     const response = await axios.post("http://127.0.0.1:5000/query", {
-  //       message,
+  //     const response = await fetch(url, {
+  //       method: "GET", // Update to GET request
+  //       headers: {
+  //         Accept: "application/json", // Ensure we are accepting JSON
+  //       },
   //     });
 
-  //     addMessageToChat(response.data.response, "server");
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! status: ${response.status}`);
+  //     }
+  //     const data = await response.json(); // Assuming the response is JSON
+
+  //     // Assuming the API returns a JSON object with a response key
+  //     addMessageToChat(data.response, "server");
   //   } catch (error) {
-  //     console.error("Error sending message to server:", error);
+  //     console.error("Error fetching data:", error);
   //   }
 
   //   setIsLoading(false); // Stop loading
   // };
-  // useEffect(() => {
-  //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  // }, [activeChat.messages]);
 
+  const handleMessageSubmit = async (message) => {
+    // Add user message immediately
+    addMessageToChat(message, "user");
+
+    setIsLoading(true); // Start loading
+
+    try {
+      const response = await axios.post("http://127.0.0.1:5000/query", {
+        message,
+      });
+
+      addMessageToChat(response.data.response, "server");
+    } catch (error) {
+      console.error("Error sending message to server:", error);
+    }
+
+    setIsLoading(false); // Stop loading
+  };
   useEffect(() => {
-    console.log(chats);
-  }, [chats]);
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [activeChat.messages]);
+
   return (
     <Box className="chat-container">
       <Box my={6} textAlign="center">
@@ -144,7 +157,9 @@ const ChatInterface = () => {
                   message.sender === "user" ? "user-message" : "server-message"
                 }
               >
-                <Typography variant="body1">{message.text}</Typography>
+                <Typography variant="body1">
+                  {highlightSearchTerm(message.text, searchQuery)}
+                </Typography>
               </Paper>
             </ListItem>
           ))}
