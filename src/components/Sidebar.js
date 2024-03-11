@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useChat } from "./ChatContext";
+import { IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete"; // Import MUI Delete icon
 
 import {
   Drawer,
@@ -15,10 +17,22 @@ import SearchIcon from "@mui/icons-material/Search";
 import MemoryIcon from "@mui/icons-material/Memory";
 
 const Sidebar = () => {
-  const { chats, addNewChat, setActiveChatId, activeChatId } = useChat();
+  const {
+    chats,
+    addNewChat,
+    setActiveChatId,
+    activeChatId,
+    setSearchQuery,
+    searchQuery,
+    removeChat,
+  } = useChat();
   const activeChatStyle = {
     bgcolor: "rgba(255, 255, 255, 0.2)", // Light white background for the active chat
     color: "white", // Keep text color white
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value.toLowerCase()); // This updates the context's search query
   };
 
   return (
@@ -31,8 +45,8 @@ const Sidebar = () => {
           width: "20%",
           boxSizing: "border-box",
           bgcolor: "rgb(173, 35, 67)",
-          color: "white", // Set text color to white for all child components
-          height: "100%", // Fill the height of the flex container
+          color: "white",
+          height: "100%",
           marginTop: "64px",
         },
       }}
@@ -49,17 +63,19 @@ const Sidebar = () => {
             fullWidth
             placeholder="Search"
             variant="outlined"
+            value={searchQuery}
+            onChange={handleSearchChange}
             sx={{
-              input: { color: "white" }, // Set text color inside the input field to white
+              input: { color: "white" },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "white", // Set border color
+                  borderColor: "white",
                 },
                 "&:hover fieldset": {
-                  borderColor: "white", // Set border color on hover
+                  borderColor: "white",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "white", // Set border color on focus
+                  borderColor: "white",
                 },
               },
             }}
@@ -74,19 +90,35 @@ const Sidebar = () => {
           </ListItemIcon>
           <ListItemText primary="My Memory" sx={{ color: "white" }} />
         </ListItem>
-        {chats.map((chat, index) => (
-          <ListItem
-            button
-            key={chat.id}
-            onClick={() => setActiveChatId(chat.id)}
-            sx={chat.id === activeChatId ? activeChatStyle : {}}
-          >
-            <ListItemText
-              primary={`Chat ${index + 1}`}
-              sx={{ color: chat.id === activeChatId ? "inherit" : "white" }}
-            />
-          </ListItem>
-        ))}
+        {chats.map((chat, index) => {
+          // Check if the chat contains any messages that match the search query
+          const isChatIncludedInSearch =
+            searchQuery === "" ||
+            chat.messages.some((message) =>
+              message.text.toLowerCase().includes(searchQuery)
+            );
+
+          return isChatIncludedInSearch ? (
+            <ListItem
+              button
+              key={chat.id}
+              onClick={() => setActiveChatId(chat.id)}
+              sx={chat.id === activeChatId ? activeChatStyle : {}}
+            >
+              <ListItemText
+                primary={`Chat ${index + 1}`} // Keep original numbering
+                sx={{ color: chat.id === activeChatId ? "inherit" : "white" }}
+              />
+              <IconButton
+                edge="end"
+                aria-label="delete"
+                onClick={() => removeChat(chat.id)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </ListItem>
+          ) : null; // Don't render the chat if it doesn't match the search query
+        })}
       </List>
       <Divider sx={{ bgcolor: "white" }} />
     </Drawer>

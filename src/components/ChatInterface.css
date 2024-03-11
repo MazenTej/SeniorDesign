@@ -1,25 +1,23 @@
 .chat-container {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-height: calc(100vh - 200px);
-    align-items: center;
-    width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-height: calc(100vh - 200px);
+  align-items: center;
+  width: 100%;
+}
 
-  }
+.card-layout {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: stretch; /* Ensures that all items stretch to fill the container */
+  width: 100%; /* Set the width to fill the container */
+  gap: 16px; /* Adds a gap between the cards */
+  margin-top: 32px; /* Added margin to the top for space between title and boxes */
+}
 
-  .card-layout {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: stretch; /* Ensures that all items stretch to fill the container */
-    width: 100%; /* Set the width to fill the container */
-    gap: 16px; /* Adds a gap between the cards */
-    margin-top: 32px; /* Added margin to the top for space between title and boxes */
-
-  }
-
-  /* Grid item styling */
+/* Grid item styling */
 .card-layout > .MuiGrid-root {
   flex: 1; /* Each grid item takes up equal space */
 }
@@ -32,22 +30,26 @@
   height: 100%; /* Ensures that each card content takes the full height of the card */
 }
 
-
-  .list-start {
-    display: flex;
-    width: 100%;
-    justify-content: flex-end;
-    align-items: flex-end;
-    flex-direction: column;
-  }
-
-  .message-list {
-    flex-grow: 1;
-    width: 100%;
-    overflow-y: auto;
-    padding: 16px;
-    margin-bottom: 16px;
-  }
+.list-start {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-direction: column;
+}
+.highlight {
+  background-color: #ffff99; /* Light yellow */
+  color: black; /* Ensure text color contrasts well with the highlight */
+  padding: 0 4px; /* Optional: Adds a bit of padding around the highlighted text */
+  border-radius: 4px; /* Optional: Rounds the corners for a softer look */
+}
+.message-list {
+  flex-grow: 1;
+  width: 100%;
+  overflow-y: auto;
+  padding: 16px;
+  margin-bottom: 16px;
+}
 /*   
   .message-item {
     padding: 8px;
@@ -67,22 +69,21 @@
     background-color: #f50057; 
     color: white;
   } */
-  .message-item .user-message {
-    background-color: #0984ff !important;
-    color: white !important;
-    padding: 10px;
-    margin-right: auto;
+.message-item .user-message {
+  background-color: #0984ff !important;
+  color: white !important;
+  padding: 10px;
+  margin-right: auto;
 
-    border-radius: 10px;
+  border-radius: 10px;
 }
 
 .message-item .server-message {
-    background-color: #f50057 !important;
-    color: white !important;
-    padding: 10px;
-    border-radius: 10px;
-    margin-left: auto;
-
+  background-color: #f50057 !important;
+  color: white !important;
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: auto;
 }
 .chat-input-container {
   width: 70%;
@@ -93,16 +94,14 @@
   background: white; /* Ensure the background matches the page */
   z-index: 1000; /* Ensure padding doesn't affect the overall width */
 }
-  
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

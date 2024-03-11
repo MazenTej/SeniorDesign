@@ -20,11 +20,27 @@ import "./ChatInterface.css";
 
 const ChatInterface = () => {
   const { chats, activeChatId, addMessageToChat } = useChat();
+  const { searchQuery } = useChat(); // Get searchQuery from context
+
   const activeChat = chats.find((chat) => chat.id === activeChatId) || {
     messages: [],
   };
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
+  const highlightSearchTerm = (text, searchTerm) => {
+    if (!searchTerm.trim()) return text; // Return original text if search term is empty
+
+    const parts = text.split(new RegExp(`(${searchTerm})`, "gi"));
+    return parts.map((part, index) =>
+      part.toLowerCase() === searchTerm.toLowerCase() ? (
+        <span key={index} className="highlight">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+  };
 
   const handleMessageSubmit = async (message) => {
     // Add user message immediately
@@ -79,10 +95,10 @@ const ChatInterface = () => {
   // useEffect(() => {
   //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   // }, [activeChat.messages]);
-
   useEffect(() => {
-    console.log(chats);
-  }, [chats]);
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [activeChat.messages]);
+
   return (
     <Box className="chat-container">
       <Box my={6} textAlign="center">
@@ -144,7 +160,9 @@ const ChatInterface = () => {
                   message.sender === "user" ? "user-message" : "server-message"
                 }
               >
-                <Typography variant="body1">{message.text}</Typography>
+                <Typography variant="body1">
+                  {highlightSearchTerm(message.text, searchQuery)}
+                </Typography>
               </Paper>
             </ListItem>
           ))}
