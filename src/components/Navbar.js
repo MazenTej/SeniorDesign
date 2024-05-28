@@ -14,7 +14,7 @@ const Navbar = () => {
         >
           <Typography variant="h6">Vanguard AI Helper</Typography>
         </Link>
-        <IconButton color="inherit">
+        <IconButton color="inherit" aria-label="Help">
           <HelpOutlineIcon />
         </IconButton>
       </Toolbar>

@@ -1,7 +1,5 @@
 import React from "react";
 import Navbar from "../../src/components/Navbar";
-import Sidebar from "../../src/components/Sidebar";
-import ChatInterface from "../../src/components/ChatInterface";
 import { CssBaseline, Box, Typography } from "@mui/material";
 import "./Landing.css";
 import { useNavigate } from "react-router-dom";
