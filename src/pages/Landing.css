@@ -18,8 +18,7 @@
     background-color: rgb(173, 35, 67); /* Set the background color */
     color: white; /* Set the text color to white */
     border: none; /* Remove border */
-    border-radius: 5px; /* Optional: adds rounded corners */
+    border-radius: 5px;
     font-size: 16px; /* Adjust the font size as needed */
-    /* Add more styling here to match your design */
   }
   
