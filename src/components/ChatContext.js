@@ -32,10 +32,9 @@ export const ChatProvider = ({ children }) => {
     // Save the active chat ID to localStorage whenever it changes
     localStorage.setItem("activeChatId", activeChatId);
   }, [activeChatId]);
-  // Inside ChatProvider component
   useEffect(() => {
     if (chats.length === 0) {
-      addNewChat(); // This should set an activeChatId as well
+      addNewChat(); 
     } else if (activeChatId === null) {
       setActiveChatId(chats[0].id);
     }
@@ -43,7 +42,7 @@ export const ChatProvider = ({ children }) => {
 
   const addNewChat = () => {
     const newChat = {
-      id: Date.now().toString(), // Using Date.now() for simplicity; consider a more robust ID generation strategy for production
+      id: Date.now().toString(), 
       messages: [],
     };
     setChats((prevChats) => [...prevChats, newChat]);
