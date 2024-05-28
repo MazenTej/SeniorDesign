@@ -40,8 +40,8 @@
 .highlight {
   background-color: #ffff99; /* Light yellow */
   color: black; /* Ensure text color contrasts well with the highlight */
-  padding: 0 4px; /* Optional: Adds a bit of padding around the highlighted text */
-  border-radius: 4px; /* Optional: Rounds the corners for a softer look */
+  padding: 0 4px; 
+  border-radius: 4px; 
 }
 .message-list {
   flex-grow: 1;
