@@ -53,6 +53,5 @@ describe("Sidebar", () => {
     setup();
     const deleteButton = screen.getAllByLabelText("delete")[0]; // Assuming multiple delete icons
     fireEvent.click(deleteButton);
-    // You would check if removeChat from context is called, or if the chat item disappears from the document
   });
 });
