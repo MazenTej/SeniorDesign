@@ -42,37 +42,7 @@ const ChatInterface = () => {
     );
   };
 
-  // const handleMessageSubmit = async (message) => {
-  //   // Add user message immediately
-  //   addMessageToChat(message, "user");
-
-  //   setIsLoading(true); // Start loading
-
-  //   // Encode the message to ensure the URL is correctly formatted
-  //   const encodedMessage = encodeURIComponent(message);
-  //   const url = `https://qwq4uzmkaq6tmmj7afeozfguke0ulend.lambda-url.us-east-1.on.aws/?query=${encodedMessage}`;
-
-  //   try {
-  //     const response = await fetch(url, {
-  //       method: "GET", // Update to GET request
-  //       headers: {
-  //         Accept: "application/json", // Ensure we are accepting JSON
-  //       },
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! status: ${response.status}`);
-  //     }
-  //     const data = await response.json(); // Assuming the response is JSON
-
-  //     // Assuming the API returns a JSON object with a response key
-  //     addMessageToChat(data, "server");
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-
-  //   setIsLoading(false); // Stop loading
-  // };
+  
 
   const handleMessageSubmit = async (message) => {
     // Add user message immediately
